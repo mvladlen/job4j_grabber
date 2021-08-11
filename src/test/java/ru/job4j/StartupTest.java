@@ -1,11 +1,13 @@
 package ru.job4j;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
-public class StartupTest extends TestCase {
+import static org.junit.Assert.assertTrue;
+
+public class StartupTest  {
 
     @Test
-    public void main() {
+    public void test() {
+        assertTrue(true);
     }
 }
