@@ -4,6 +4,8 @@
         "http://checkstyle.sourceforge.io/dtds/configuration_1_3.dtd">
     <module name="Checker">
 
+
+
     <!--Расширение файла должно быть java, properties, xml-->
     <property name="fileExtensions" value="java, properties, xml"/>
 

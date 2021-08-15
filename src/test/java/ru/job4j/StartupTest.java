@@ -8,6 +8,8 @@ public class StartupTest  {
 
     @Test
     public void test() {
+        System.out.println("test");
         assertTrue(true);
+
     }
 }
