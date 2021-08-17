@@ -5,17 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
-public class Config_grabber {
+public class Config {
 
     private final String path;
     private final Map<String, String> values = new HashMap<>();
 
-    public Config_grabber() {
-        this.path = "C:\\projects\\job4j_grabber\\rabbit.properties";
-    }
-
-    public Config_grabber(String path) {
+    public Config(String path) {
         this.path = path;
     }
 
@@ -31,8 +28,8 @@ public class Config_grabber {
 
     public static void main(String[] args) {
         System.out.println(System.getProperties());
-        Config_grabber configGrabber = new Config_grabber();
-        configGrabber.load();
+        Config config = new Config("./src/main/resources/rabbit.properties");
+        config.load();
     }
 
     public void load() {
@@ -49,7 +46,7 @@ public class Config_grabber {
     public String value(String key) {
         return values.get(key);
     }
-/*
+
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
@@ -60,7 +57,7 @@ public class Config_grabber {
         }
         return out.toString();
     }
-*/
+
 }
 
 
