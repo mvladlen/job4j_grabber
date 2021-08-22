@@ -5,18 +5,20 @@ import java.util.Objects;
 
 public class Post {
     private static int counter = 0;
-    private int id; // типа int - идентификатор вакансии (берется из нашей базы данных);
-    private String title; // типа String - название вакансии;
-    private String link; // типа String - ссылка на описание вакансии;
-    private String description; // типа String - описание вакансии;
-    private LocalDateTime created; // типа LocalDateTime - дата создания вакансии.
+    private int id = counter++; // типа int - идентификатор вакансии (берется из нашей базы данных);
+    private String title = "title"; // типа String - название вакансии;
+    private String link = "link"; // типа String - ссылка на описание вакансии;
+    private String description = "desc"; // типа String - описание вакансии;
+    private LocalDateTime created = LocalDateTime.now(); // типа LocalDateTime - дата создания вакансии.
 
     public Post() {
-        new Post(counter++, "title", "link", "description", LocalDateTime.now());
     }
 
-    public Post(int id, String title, String link, String description) {
-        new Post(id, title, link, description, LocalDateTime.now());
+    public Post(String title, String link, String description, LocalDateTime created) {
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.created = created;
     }
 
     public Post(int id, String title, String link, String description, LocalDateTime created) {
@@ -89,8 +91,8 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +
-                ", description='" + description + '\'' +
+                ", description='" + description.substring(0,20) + '\'' +
                 ", created=" + created +
-                '}';
+                "}" + System.lineSeparator();
     }
 }
