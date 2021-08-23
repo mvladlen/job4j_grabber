@@ -2,11 +2,10 @@ package ru.job4j.grabber;
 
 import ru.job4j.grabber.utils.Post;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class MemStore implements Store {
-    List<Post> posts = (List<Post>) new LinkedHashMap<Integer, Post>();
+    ArrayList<Post> posts =  new ArrayList<>();
 
     @Override
     public void save(Post post) {
@@ -19,7 +18,7 @@ public class MemStore implements Store {
     }
 
     @Override
-    public Post findById(int id) {
-        return posts.get(id);
+    public Post findById(String id) {
+        return posts.get(Integer.parseInt(id));
     }
 }

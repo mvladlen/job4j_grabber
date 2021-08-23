@@ -90,7 +90,6 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", link='" + link + '\'' +
-                ", description='" + description.substring(0,20) + '\'' +
                 ", created=" + created +
                 "}" + System.lineSeparator();
     }
