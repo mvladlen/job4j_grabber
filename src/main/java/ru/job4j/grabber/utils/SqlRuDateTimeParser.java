@@ -27,8 +27,7 @@ public class SqlRuDateTimeParser implements DateTimeParser {
     public LocalDateTime parse(String parse) {
 
         String[] strings = parse.split("[\\s,:]");
-        if (strings.length < 6)
-            if (strings[0].equals("сегодня")) {
+        if (strings[0].equals("сегодня")) {
                 return LocalDateTime.of(
                         LocalDate.now().getYear(),
                         LocalDate.now().getMonth(),
@@ -36,7 +35,7 @@ public class SqlRuDateTimeParser implements DateTimeParser {
                         Integer.parseInt(strings[2]),
                         Integer.parseInt(strings[3]));
 
-            } else if (strings[0].equals("вчера")) {
+        } else if (strings[0].equals("вчера")) {
                 return LocalDateTime.of(
                         LocalDate.now().getYear(),
                         LocalDate.now().getMonth(),

@@ -22,7 +22,6 @@ public class SqlRuParse implements Parse {
     }
 
     @Override
-
     public List<Post> list(String link) {
         Document doc;
         List<Post> posts = new LinkedList<>();
