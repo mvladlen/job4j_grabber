@@ -17,13 +17,13 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 public class Grabber implements Grab {
-    private final Properties cfg = new Properties();
+    public final Properties cfg = new Properties();
 
     public static void main(String[] args) throws Exception {
         Grabber grab = new Grabber();
         grab.cfg();
         Scheduler scheduler = grab.scheduler();
-        Store store = new PsqlStore(grab.getCfg());
+        Store store = new PsqlStore(grab.cfg);
         grab.init(new SqlRuParse(new SqlRuDateTimeParser()), store, scheduler);
         grab.web(store);
     }
@@ -35,13 +35,9 @@ public class Grabber implements Grab {
     }
 
     public void cfg() throws IOException {
-        try (InputStream in = new FileInputStream(new File("./src/main/resources/app.properties"))) {
+        try (InputStream in = new FileInputStream(new File("app.properties"))) {
             cfg.load(in);
         }
-    }
-
-    public Properties getCfg() {
-        return cfg;
     }
 
     @Override
