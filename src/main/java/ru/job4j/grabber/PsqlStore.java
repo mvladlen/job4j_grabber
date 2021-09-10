@@ -1,10 +1,8 @@
 package ru.job4j.grabber;
 
-import org.quartz.JobExecutionException;
 import ru.job4j.grabber.utils.Post;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ import java.util.Properties;
 
 public class PsqlStore implements Store, AutoCloseable {
 
-    private Connection cnn;
+    private final Connection cnn;
 
     public PsqlStore(Properties cfg) {
         try {
@@ -29,6 +27,22 @@ public class PsqlStore implements Store, AutoCloseable {
         }
     }
 
+    public static void main(String[] args) {
+        Properties cfg = new Properties();
+        try (FileInputStream in = new FileInputStream("./src/main/resources/pgdbc.properties")) {
+            cfg.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PsqlStore store = new PsqlStore(cfg);
+        Post post = new Post("test", "testlink", "testdesc", LocalDateTime.now());
+        store.save(post);
+        List<Post> posts = store.getAll();
+        System.out.println(posts);
+        Post post1 = store.findById("1");
+        System.out.println(post1);
+    }
+
     @Override
     public void save(Post post) {
         try (PreparedStatement statement =
@@ -37,7 +51,7 @@ public class PsqlStore implements Store, AutoCloseable {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getDescription());
             statement.setString(3, post.getLink());
-            statement.setTimestamp(4,  Timestamp.valueOf(post.getCreated()));
+            statement.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
             statement.execute();
         } catch (SQLException throwables) {
             System.out.println("insert failed");
@@ -75,13 +89,13 @@ public class PsqlStore implements Store, AutoCloseable {
             statement.setInt(1, Integer.parseInt(id));
             try (ResultSet resultSet = statement.executeQuery()) {
                 resultSet.next();
-                    post = new Post(
-                            resultSet.getInt("id"),
-                            resultSet.getString("name"),
-                            resultSet.getString("text"),
-                            resultSet.getString("link"),
-                            resultSet.getTimestamp("created").toLocalDateTime()
-                    );
+                post = new Post(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("text"),
+                        resultSet.getString("link"),
+                        resultSet.getTimestamp("created").toLocalDateTime()
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,21 +108,5 @@ public class PsqlStore implements Store, AutoCloseable {
         if (cnn != null) {
             cnn.close();
         }
-    }
-
-    public static void main(String[] args) {
-        Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./src/main/resources/pgdbc.properties")) {
-            cfg.load(in);
-        }  catch (IOException e) {
-            e.printStackTrace();
-        }
-        PsqlStore store = new PsqlStore(cfg);
-        Post post= new Post("test","testlink","testdesc", LocalDateTime.now());
-        store.save(post);
-        List<Post> posts = store.getAll();
-        System.out.println(posts);
-        Post post1 = store.findById("1");
-        System.out.println(post1);
     }
 }

@@ -16,20 +16,35 @@ public class SqlRuParse {
     List<Post> posts = new LinkedList<>();
     int page = 0;
 
-    public List<Post> SqlRuParsePages(int pages) {
+    public static void main(String[] args) {
+
+        SqlRuParse parser = new SqlRuParse();
+        for (int i = 1; i <= 5; i++) {
+            List<Post> posts = parser.getNextPage();
+            for (Post post : posts) {
+                System.out.println(post.getTitle());
+                System.out.println(post.getDescription());
+                System.out.println(post.getLink());
+                System.out.println(post.getCreated());
+            }
+        }
+    }
+
+    public List<Post> sqlRuParsePages(int pages) {
 
         for (int i = 1; i <= pages; i++) {
             getNextPage();
         }
         return posts;
     }
+
     private List<String> getTopic(String link) {
         Document doc;
         List<String> messages = new LinkedList<>();
         try {
             doc = Jsoup.connect(link).get();
             Elements row = doc.select(".msgBody");
-            for (Element td: row) {
+            for (Element td : row) {
                 messages.add(td.ownText());
             }
 
@@ -38,6 +53,7 @@ public class SqlRuParse {
         }
         return messages;
     }
+
     private List<Post> getNextPage() {
         page++;
         Document doc;
@@ -59,20 +75,6 @@ public class SqlRuParse {
             System.out.println("can't open page");
         }
         return posts;
-    }
-
-        public static void main(String[] args) {
-
-        SqlRuParse parser = new SqlRuParse();
-        for (int i = 1; i <= 5; i++) {
-            List<Post> posts = parser.getNextPage();
-            for (Post post : posts) {
-                System.out.println(post.getTitle());
-                System.out.println(post.getDescription());
-                System.out.println(post.getLink());
-                System.out.println(post.getCreated());
-            }
-        }
     }
 
 }

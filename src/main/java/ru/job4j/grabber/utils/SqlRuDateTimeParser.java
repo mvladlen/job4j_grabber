@@ -28,24 +28,24 @@ public class SqlRuDateTimeParser implements DateTimeParser {
 
         String[] strings = parse.split("[\\s,:]");
         if (strings[0].equals("сегодня")) {
-                return LocalDateTime.of(
-                        LocalDate.now().getYear(),
-                        LocalDate.now().getMonth(),
-                        LocalDate.now().getDayOfMonth(),
-                        Integer.parseInt(strings[2]),
-                        Integer.parseInt(strings[3]));
+            return LocalDateTime.of(
+                    LocalDate.now().getYear(),
+                    LocalDate.now().getMonth(),
+                    LocalDate.now().getDayOfMonth(),
+                    Integer.parseInt(strings[2]),
+                    Integer.parseInt(strings[3]));
 
         } else if (strings[0].equals("вчера")) {
-                return LocalDateTime.of(
-                        LocalDate.now().getYear(),
-                        LocalDate.now().getMonth(),
-                        LocalDate.now().getDayOfMonth(),
-                        Integer.parseInt(strings[2]),
-                        Integer.parseInt(strings[3])).minusDays(1);
+            return LocalDateTime.of(
+                    LocalDate.now().getYear(),
+                    LocalDate.now().getMonth(),
+                    LocalDate.now().getDayOfMonth(),
+                    Integer.parseInt(strings[2]),
+                    Integer.parseInt(strings[3])).minusDays(1);
 
-            }
+        }
         return LocalDateTime.of(
-                2000+Integer.parseInt(strings[2]),
+                2000 + Integer.parseInt(strings[2]),
                 Integer.parseInt(MONTHS.get(strings[1])),
                 Integer.parseInt(strings[0]),
                 Integer.parseInt(strings[4]),

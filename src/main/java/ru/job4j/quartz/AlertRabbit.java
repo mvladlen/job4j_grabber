@@ -15,8 +15,7 @@ public class AlertRabbit {
     public static void main(String[] args) {
         Config config = new Config("./src/main/resources/rabbit.properties");
         config.load();
-        try (Connection connection = getConnection(config))
-         {
+        try (Connection connection = getConnection(config)) {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
